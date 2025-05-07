@@ -10,6 +10,7 @@ import {
   Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import axios from 'axios'; // import axios
 
 function Login() {
   const navigate = useNavigate();
@@ -21,9 +22,9 @@ function Login() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -31,15 +32,28 @@ function Login() {
     e.preventDefault();
     setError('');
 
+    // Check if the fields are empty
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
 
-    if (formData.email === 'admin@example.com' && formData.password === 'password') {
-      navigate('/dashboard');
-    } else {
-      setError('Invalid credentials');
+    try {
+      // Send POST request to the API endpoint
+      const response = await axios.post('http://localhost:5000/auth/login', {
+        username: formData.email,
+        password: formData.password,
+      });
+
+      // If login is successful
+      if (response.status === 200) {
+        // You can save the token or user data in localStorage or context
+        sessionStorage.setItem('authToken', response.data.token);
+        navigate('/dashboard'); // Redirect to dashboard
+      }
+    } catch (err) {
+      // Handle error
+      setError('Invalid credentials or something went wrong');
     }
   };
 

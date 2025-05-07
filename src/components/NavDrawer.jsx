@@ -17,6 +17,7 @@ import {
   Person as PersonIcon,
   Schedule as ScheduleIcon,
   Settings as SettingsIcon,
+  Group as GroupIcon, // good for 'Manage Employees'
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -28,6 +29,7 @@ function NavDrawer({ open, onDrawerToggle }) {
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
     { text: 'Schedule', icon: <ScheduleIcon />, path: '/schedule' },
+    { text: 'Manage Employees', icon: <GroupIcon />, path: '/employees' },
     { text: 'Profile', icon: <PersonIcon />, path: '/profile' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
   ];
